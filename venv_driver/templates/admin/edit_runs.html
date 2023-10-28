@@ -1,0 +1,132 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500&display=swap');
+
+  .form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .form-container::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: linear-gradient(45deg, #f06, #48f, #4e4);
+    transform: rotate(45deg);
+    z-index: 1;
+  }
+
+  .form-container * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: .5rem;
+  }
+
+  .btn-primary {
+    background-color: #e14eca;
+    border: none;
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #9c1ab1;
+    transform: scale(1.05);
+  }
+
+  input[type="checkbox"] + label {
+    font-family: 'Zilla Slab', serif;
+    font-size: 1.1rem;
+  }
+
+  h2 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color: #333;
+    background: linear-gradient(45deg, #f06, #48f);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-control, .form-select {
+    border-radius: 0;
+  }
+
+  .form-container {
+    animation: appear 0.7s ease-in-out;
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="form-container">
+    <h2>Edit Runs</h2>
+    <form action="/edit_runs" method="post">
+      <div class="mb-3">
+        <label for="driver_id" class="form-label">Select a Driver:</label>
+        <select class="form-select" name="driver_id" id="driver_id">
+          {% for driver in junior_drivers %}
+              <option value="{{ driver[0] }}">{{ driver[1] }} {{ driver[2] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="course_id" class="form-label">Select a Course:</label>
+        <select class="form-select" name="course_id" id="course_id">
+          {% for course in courses %}
+              <option value="{{ course[0] }}">{{ course[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="run_num" class="form-label">Run Number:</label>
+        <input type="number" class="form-control" name="run_num" id="run_num">
+      </div>
+      <div class="mb-3">
+        <label for="seconds" class="form-label">Seconds:</label>
+        <input type="number" class="form-control" name="seconds" id="seconds">
+      </div>
+      <div class="mb-3">
+        <label for="cones" class="form-label">Cones:</label>
+        <input type="number" class="form-control" name="cones" id="cones">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" name="wd" id="wd">
+        <label class="form-check-label" for="wd">Check this box if WD</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Edit Runs</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

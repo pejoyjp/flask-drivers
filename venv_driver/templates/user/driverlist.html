@@ -1,0 +1,107 @@
+{% extends "user/base.html" %}
+
+{% block content %}
+<style>
+  .crazy-container {
+    background-color: #2c3e50;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #e74c3c;
+  }
+  .crazy-title {
+    color: #e74c3c;
+    font-family: 'Chalkduster', sans-serif;
+    text-shadow: 2px 2px #3498db;
+  }
+  .crazy-form {
+    background-color: #34495e;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px #e74c3c;
+  }
+  .form-control, .btn {
+    border-radius: 0;
+  }
+  .btn-crazy {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px #c0392b;
+  }
+  .btn-crazy:hover {
+    background-color: #c0392b;
+  }
+  .crazy-list {
+    list-style: none;
+    padding: 0;
+  }
+  .crazy-list li {
+    background-color: #34495e;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-left: 5px solid skyblue;
+    transition: transform 0.2s ease-in-out;
+  }
+  .crazy-list li:hover {
+    transform: translateX(10px);
+  }
+  .crazy-link {
+    color: #ecf0f1;
+    text-decoration: none;
+  }
+</style>
+
+<div class="container crazy-container">
+  <h2 class="crazy-title">Driver List</h2>
+
+  <div class="crazy-form">
+    <form class="d-flex gap-2" method="get" action="/driverdetails/">
+      <div class="form-group flex-grow-1">
+        <label for="driver" class="text-white">Choose a driver:</label>
+        <select class="form-control" name="driver_id" id="driver">
+          {% for driver in driver_list %}
+            <option value="{{ driver[0] }}">{{ driver[1] }} {{ driver[2] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="button" class="btn btn-crazy align-self-end" id="selectButton">View</button>
+    </form>
+  </div>
+
+  <h3 class="crazy-title mt-4">All Driver Details</h3>
+  <div class="crazy-form mt-3">
+    <form action="{{ url_for('listdrivers') }}" method="get">
+      <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Search by name or surname">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-crazy">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <ul class="crazy-list mt-4">
+    {% for driver in driver_list %}
+      {% if driver[5] is not none and driver[5] <= 18 %} 
+        <li style="border-left-color: #f39c12;">
+      {% else %}
+        <li>
+      {% endif %}
+        <a href="{{ url_for('show_driver_details', driver_id=driver[0]) }}" class="crazy-link">
+          {{ driver[2] }} {{ driver[1] }} - {{ driver[3] }} ({{ driver[4] }})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  document.getElementById("selectButton").addEventListener("click", function() {
+    var selectedDriverId = document.getElementById("driver").value;
+    if (selectedDriverId) {
+      window.location.href = "/driverdetails/" + selectedDriverId;
+    }
+  });
+</script>
+{% endblock %}

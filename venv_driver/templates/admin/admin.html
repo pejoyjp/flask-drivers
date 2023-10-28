@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<style>
+  .custom-header {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    color: #e74c3c;
+    text-shadow: 2px 2px 4px #3498db;
+  }
+  .btn-search {
+    transition: transform 0.2s ease-in-out;
+  }
+  .btn-search:hover {
+    transform: scale(1.1);
+  }
+  .custom-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(44, 62, 80, 0.1);
+  }
+  .table th, .table td {
+    font-family: 'Courier New', Courier, monospace;
+  }
+</style>
+
+<div class="container">
+  <h2 class="mt-4 custom-header">Driver Search</h2>
+  <form action="/" method="get" class="mb-4">
+      <div class="form-group">
+          <label for="search" class="form-label">Search by First Name or Surname:</label>
+          <input type="text" class="form-control" name="search" id="search" placeholder="Enter name...">
+      </div>
+      <button type="submit" class="btn btn-primary mt-2 btn-search">Search</button>
+  </form>
+  
+  <h1 class="mt-4 custom-header">Cool Page</h1>
+  
+  <h2 class="mt-4 custom-header">Junior Driver List</h2>
+  <table class="table table-striped custom-table">
+    <thead>
+        <tr>
+            <th>Driver ID</th>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Caregiver First Name</th>
+            <th>Caregiver Surname</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for driver in junior_drivers %}
+        <tr>
+            <td>{{ driver[0] }}</td>
+            <td>{{ driver[1] }}</td>
+            <td>{{ driver[2] }}</td>
+            <td>{{ driver[3] }}</td>
+            <td>{{ driver[4] }}</td>
+            <td>{{ driver[5] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
