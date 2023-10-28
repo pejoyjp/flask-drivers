@@ -1,0 +1,43 @@
+{% extends "user/base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary" style="font-family: 'Lobster', cursive;"> Course List</h2>
+        <h4 class="text-muted" style="font-family: 'Dancing Script', cursive;">Dive into the madness!</h4>
+    </div>
+
+    <div class="card shadow-lg mb-5 bg-warning" style="border-radius: 25px;">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">Course</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Map diagram</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in course_list %}
+                    <tr>
+                        {% for field in course %}
+                        {% if loop.index == 3 %} 
+                        <td class="text-center" style="font-family: 'Indie Flower', cursive;">
+                            <img src="{{ url_for('static', filename=field) }}" style="width: 300px;" alt="Course Image">
+                        </td>
+                        {% else %}
+                        <td class="text-center" style="font-family: 'Indie Flower', cursive;">{{ field }}</td>
+                        {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
